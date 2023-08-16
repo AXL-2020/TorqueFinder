@@ -5,9 +5,9 @@
 #include <mutex>
 #include "torque db.hpp"
 
-void findTorque() {
+void findTorque(int& flag) {
     int year = 0, make = 0, model = 0, counter = 1;
-
+    flag = 0;
     system("cls");
 
     do {
@@ -35,19 +35,24 @@ void findTorque() {
     std::cout << it->first << std::endl;
     for (auto i : it->second) {
         if (year >= i.second.startYear && year <= i.second.endYear)
-            std::cout << i.first << ": " << i.second.torque << " ft/lbs" << std::endl << std::endl;
+            std::cout << i.first << ": " << i.second.torque << " ft/lbs" << std::endl;
     }
+    std::cout << std::endl;
 }
 
 int main() {
     SetConsoleTitle(L"Lug Torque Finder by Aidan Latessa");
-    findTorque();
-    std::once_flag flag;
+    int flag;
+    findTorque(flag);
     while (!GetAsyncKeyState(VK_ESCAPE)) {
-        std::call_once(flag, [](){ std::cout << "Press spacebar to lookup a new torque." << std::endl; });
+       if (!flag) 
+           std::cout << "Press spacebar to lookup a new torque. " << std::endl;
         
-        if (GetAsyncKeyState(VK_SPACE))
-            findTorque();
+       flag = 1;
+        
+       if (GetAsyncKeyState(VK_SPACE)) 
+            findTorque(flag);
+       
         Sleep(100);
     }
 }
