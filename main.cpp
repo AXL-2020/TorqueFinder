@@ -41,7 +41,7 @@ void findTorque(int& flag) {
 }
 
 int main() {
-    SetConsoleTitle(L"Lug Torque Finder by Aidan Latessa");
+    SetConsoleTitle(L"Lug Torque Finder by Aidan");
     int flag;
     findTorque(flag);
     while (!GetAsyncKeyState(VK_ESCAPE)) {
